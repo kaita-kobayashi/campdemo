@@ -19,14 +19,14 @@ use function PHPUnit\Framework\returnSelf;
 */
 
 // ログイン・汎用系
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect('home');
+    } else {
+        return redirect('login');
+    }
+});
 Route::group(['middleware' => ['guest:web']], function () {
-    Route::get('/', function () {
-        if (Auth::check()) {
-            return redirect('home');
-        } else {
-            return redirect('login');
-        }
-    });
     Route::get('login', [LoginController::class, 'create'])->name('login');
     $limiter = config('fortify.limiters.login');
     $twoFactorLimiter = config('fortify.limiters.two-factor');
@@ -36,8 +36,6 @@ Route::group(['middleware' => ['guest:web']], function () {
             'guest:' . config('fortify.guard'),
             $limiter ? 'throttle:' . $limiter : null,
         ]));
-    Route::post('/logout', [LoginController::class, 'destroy'])
-        ->name('logout');
 
     Route::get('two_factor_auth', [LoginController::class, 'getTwoFactorAuth'])->name('getTwoFactorAuth');
     Route::post('two_factor_auth', [LoginController::class, 'postTwoFactorAuth'])->name('postTwoFactorAuth');
@@ -53,6 +51,8 @@ Route::group(['middleware' => ['auth:web']], function () {
     Route::get('home', function () {
         return view('home');
     })->name('home');
+    Route::post('/logout', [LoginController::class, 'destroy'])
+        ->name('logout');
     // スタッフ管理
     Route::group(['prefix' => 'staff'], function () {
         Route::get('/', [StaffController::class, 'getStaff'])->name('getStaff');

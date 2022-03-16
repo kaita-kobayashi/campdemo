@@ -67,6 +67,14 @@ class Staff extends Authenticatable
     }
 
     /**
+     * メールアドレス返却
+     */
+    public function getEmailForPasswordReset(): string
+    {
+        return $this->email_address;
+    }
+
+    /**
      * 検索条件
      *
      * @param Illuminate\Database\Eloquent\Builder
