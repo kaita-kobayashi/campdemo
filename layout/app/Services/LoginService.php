@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Staff;
+use Illuminate\Http\Request;
+use App\Services\CommonService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class LoginService extends CommonService
+{
+    /**
+     * トークン生成
+     *
+     * @return string
+     */
+    public function getToken(): string
+    {
+        $randomPassword = '';
+        for ($i = 0; $i < 4; $i++) {
+            $randomPassword .= strval(rand(0, 9));
+        }
+        return $randomPassword;
+    }
+
+    /**
+     * トークン格納
+     *
+     * @param \App\Models\Staff $user
+     * @param string $token
+     * @return \App\Models\Staff
+     */
+    public function setToken(Staff $user, string $token): void
+    {
+        $user->tfa_token = $token;
+        $user->tfa_expiration = now()->addMinutes(10);
+        $user->save();
+    }
+
+    /**
+     * ログイン処理
+     *
+     * @param \App\Models\Staff
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     * @throws \App\Exceptions\CutomException
+     */
+    public function execLogin(Staff $user, Request $request): void
+    {
+        $user->tfa_token = null;
+        $user->tfa_expiration = null;
+        $user->login_date = now();
+        $user->save();
+        Auth::login($user);
+        // ログ作成
+        $this->setLog('execLogin', $user, $request);
+    }
+
+    /**
+     * ログ作成
+     *
+     * @param string $routeName
+     * @param mixed $user
+     * @param Illuminate\Http\Request $request
+     * @return void
+     */
+    public function setLog(string $routeName, mixed $user, Request $request): void
+    {
+        $userTableName = $user->getTable();
+        $info = $this->getOperationInfo($routeName, $user);
+        // 取得できた場合に登録実行
+        if (!empty($info)) {
+            $insertInput = [
+                $userTableName . '_id' => $user->id,
+                $userTableName . '_name' => $user->last_name . ' ' . $user->first_name,
+                'ip_address' => $_SERVER['REMOTE_ADDR'],
+                'user_agent' => $request->headers->get('user-agent'),
+                'event_name' => $info['event_name'],
+                'event_description' => $info['event_description'],
+                'source' => $routeName,
+            ];
+            DB::table($userTableName . '_log')->insert($insertInput);
+        }
+    }
+
+    /**
+     * 操作情報取得
+     *
+     * @param string $routeName
+     * @param mixed $user
+     * @return array
+     */
+    public function getOperationInfo(string $routeName, mixed $user): array
+    {
+        if (gettype(__('log.' . $routeName)) === 'array') {
+            $logInfo = __('log.' . $routeName);
+            $eventNames = __('log.event_name');
+            return [
+                'event_name' => $eventNames[$logInfo['event_name']],
+                'event_description' => ''
+                    . $user->last_name . ' ' . $user->first_name
+                    . 'さんが'
+                    . $logInfo['function_name'] . '画面で'
+                    . $eventNames[$logInfo['event_name']]
+                    . '処理を行いました。'
+            ];
+        } else {
+            return [];
+        }
+    }
+}
