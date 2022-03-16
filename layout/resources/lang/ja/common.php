@@ -1,17 +1,21 @@
 <?php
 
 return [
-    'detail' => '詳細',
-    'delete' => '削除',
-    'edit' => '編集',
-    'create' => '登録',
-    'home' => 'ホーム',
-    'exception' => '例外',
-    'search' => [
-        'default' => '未選択',
-        'btn' => '検索'
+    'btn' => [
+        'detail' => '詳細',
+        'delete' => '削除',
+        'edit' => '編集',
+        'search' => '検索',
+        'create' => '登録',
     ],
-    'showNum' => [
+    'links' => [
+        'create' => '登録',
+        'home' => 'ホーム',
+        'login' => 'ログイン',
+    ],
+    'exception' => '例外',
+    'search_default' => '未選択',
+    'show_num' => [
         '30' => '30件',
         '50' => '50件',
         '100' => '100件',

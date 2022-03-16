@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Models\PasswordReset;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Services\CommonService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class LoginService extends CommonService
 {
@@ -44,7 +46,6 @@ class LoginService extends CommonService
      * @param \App\Models\Staff
      * @param \Illuminate\Http\Request $request
      * @return void
-     * @throws \App\Exceptions\CutomException
      */
     public function execLogin(Staff $user, Request $request): void
     {
@@ -108,5 +109,21 @@ class LoginService extends CommonService
         } else {
             return [];
         }
+    }
+
+    /**
+     * パスワード更新(初回ログイン)
+     *
+     * @param array $formInput
+     * @return \App\Models\Staff
+     */
+    public function updatePassword(array $formInput): \App\Models\Staff
+    {
+        $user = Staff::where('email_address', $formInput['email'])->first();
+        $user->password = Hash::make($formInput['password']);
+        $user->save();
+
+        PasswordReset::where('email', $formInput['email'])->delete();
+        return $user;
     }
 }

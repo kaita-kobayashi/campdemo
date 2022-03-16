@@ -18,6 +18,7 @@ use function PHPUnit\Framework\returnSelf;
 |
 */
 
+// ログイン・汎用系
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -30,12 +31,17 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/home', function () {
     return view('home');
 })->name('home');
 
-Route::post('two_factor_auth', [LoginController::class, 'twoFactorAuth'])->name('twoFactorAuth');
+Route::get('two_factor_auth', [LoginController::class, 'getTwoFactorAuth'])->name('getTwoFactorAuth');
+Route::post('two_factor_auth', [LoginController::class, 'postTwoFactorAuth'])->name('postTwoFactorAuth');
+Route::get('/exception', function () {
+    return view('errors.exception');
+})->name('exception');
+Route::get('first_login', [LoginController::class, 'getFirstLogin'])->name('getFirstLogin');
+Route::post('first_login', [LoginController::class, 'postFirstLogin'])->name('postFirstLogin');
 
+// 画面
 Route::group(['middleware' => ['auth:web']], function () {
-    Route::get('/exception', function () {
-        return view('errors.exception');
-    })->name('exception');
+    // スタッフ管理
     Route::group(['prefix' => 'staff'], function () {
         Route::get('/', [StaffController::class, 'getStaff'])->name('getStaff');
         Route::post('/', [StaffController::class, 'postStaff'])->name('postStaff');

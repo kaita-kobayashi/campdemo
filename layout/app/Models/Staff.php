@@ -15,6 +15,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class Staff extends Authenticatable
@@ -28,7 +29,6 @@ class Staff extends Authenticatable
     public $timestamps = false;
     protected $table = 'staff';
     protected $rememberTokenName = false;
-
     protected $fillable = [
         'email_address',
         'password',
@@ -39,6 +39,13 @@ class Staff extends Authenticatable
         'login_date',
     ];
 
+    /**
+     * 検索カラム
+     *
+     * 完全一致：perfectMatch
+     * 部分一致：partialMatch
+     * 前方一致：prefixMatch
+     */
     protected $searchColumns = [
         'id' => 'perfectMatch',
         'email_address' => 'partialMatch',
@@ -49,8 +56,11 @@ class Staff extends Authenticatable
 
     /**
      * パスワードリセットメール送信
+     *
+     * @param string $token
+     * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         Mail::to(['email' => $this->email_address])->send(new PasswordReset($token));
         // $this->notify(new ResetPasswordNotification($token));
@@ -132,6 +142,7 @@ class Staff extends Authenticatable
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::debug($e);
             throw new CustomException(config('errors.FAILD_CREATED'));
         }
     }
@@ -152,6 +163,7 @@ class Staff extends Authenticatable
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::debug($e);
             throw new CustomException(config('errors.FAILD_UPDATE'));
         }
     }

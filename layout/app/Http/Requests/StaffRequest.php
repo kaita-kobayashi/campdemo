@@ -37,7 +37,6 @@ class StaffRequest extends FormRequest
             // 新規登録
             $rule = [
                 'email_address' => 'required|email|max:50|unique:staff',
-                'password' => 'required',
                 'last_name' => 'required|max:20',
                 'first_name' => 'required|max:20',
                 'privileges' => 'required',

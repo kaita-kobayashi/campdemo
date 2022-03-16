@@ -25,6 +25,15 @@ return [
         '1' => '本登録',
         '2' => '停止',
     ],
+    'label' => [
+        'id' => 'ID',
+        'email' => 'メールアドレス',
+        'last_name' => '性',
+        'first_name' => '名',
+        'status' => 'ステータス',
+        'privileges' => '権限',
+        'password' => 'パスワード',
+    ],
     'links' => [
         'backList' => 'スタッフ一覧',
         'backDetail' => 'スタッフ詳細へ戻る',

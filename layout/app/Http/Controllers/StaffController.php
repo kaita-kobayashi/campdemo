@@ -39,7 +39,7 @@ class StaffController extends Controller
                 'first_name' => isset($search['first_name']) ? $search['first_name'] : '',
                 'status' => isset($search['status']) ? $search['status'] : '',
             ],
-            'showNum' => $showNum,
+            'show_num' => $showNum,
         ];
 
         return view('staff.index', $viewAssign);
@@ -54,7 +54,7 @@ class StaffController extends Controller
     public function postStaff(Request $request): \Illuminate\Http\RedirectResponse
     {
         // セッション格納
-        $this->service->setSession(Config('const.CONST.SESSION_STAFF_SHOW_NUM'), $request->showNum);
+        $this->service->setSession(Config('const.CONST.SESSION_STAFF_SHOW_NUM'), $request->show_num);
 
         // 一覧表示
         return redirect('staff');

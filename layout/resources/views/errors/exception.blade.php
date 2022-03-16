@@ -1,11 +1,14 @@
-<x-app-layout>
-
+<x-guest-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-2 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex justify-between">
                     <div class="font-semibold">{{ __('common.exception') }}</div>
-                    <a href="{{ route('home') }}" class="mr-4">{{ __('common.home') }}</a>
+					@if (Auth::check())
+						<a href="{{ route('home') }}" class="mr-4">{{ __('common.home') }}</a>
+					@else
+						<a href="{{ route('login') }}" class="mr-4">{{ __('common.login') }}</a>
+					@endif
                 </div>
 				@if ($errors->has('exception'))
 					<table class="text-left table-auto mt-5">
@@ -22,4 +25,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-guest-layout>

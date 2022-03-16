@@ -16,12 +16,12 @@
             @csrf
 
             <div>
-                <x-jet-label for="email" value="メールアドレス" />
+                <x-jet-label for="email" value="{{ __('login.label.email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email_address" :value="old('email_address')" required autofocus />
             </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="パスワード" />
+                <x-jet-label for="password" value="{{ __('login.label.password') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
 
@@ -35,12 +35,12 @@
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        パスワードをお忘れの方はこちら
+                        {{ __('login.links.forget') }}
                     </a>
                 @endif
 
                 <x-jet-button class="ml-4">
-                    ログイン
+                    {{ __('login.btn.login') }}
                 </x-jet-button>
             </div>
         </form>

@@ -21,23 +21,23 @@
                     <input type="hidden" name="id" value="{{ $result->id }}">
                     <span class="error-msg">{{ $errors->first('id') }}</span>
                     {{-- メールアドレス --}}
-                    <x-jet-label for="email_address" value="メールアドレス" />
+                    <x-jet-label for="email_address" value="{{ __('staff.label.email') }}" />
                     <span class="error-msg">{{ $errors->first('email_address') }}</span>
                     <x-jet-input id="email_address" class="block mt-1 w-72" type="email" name="email_address" :value="old('email_address', $result->email_address)" />
                     {{-- パスワード --}}
-                    <x-jet-label for="password" value="パスワード" />
+                    <x-jet-label for="password" value="{{ __('staff.label.password') }}" />
                     <span class="error-msg">{{ $errors->first('password') }}</span>
                     <x-jet-input id="password" class="block mt-1 w-72" type="password" name="password" :value="old('password')" placeholder="更新する場合は入力してください。"/>
                     {{-- 性 --}}
-                    <x-jet-label for="last_name" value="性" />
+                    <x-jet-label for="last_name" value="{{ __('staff.label.last_name') }}" />
                     <span class="error-msg">{{ $errors->first('last_name') }}</span>
                     <x-jet-input id="last_name" class="block mt-1 w-72" type="text" name="last_name" :value="old('last_name', $result->last_name)" />
                     {{-- 名 --}}
-                    <x-jet-label for="first_name" value="名" />
+                    <x-jet-label for="first_name" value="{{ __('staff.label.first_name') }}" />
                     <span class="error-msg">{{ $errors->first('first_name') }}</span>
                     <x-jet-input id="first_name" class="block mt-1 w-72" type="text" name="first_name" :value="old('first_name', $result->first_name)" />
                     {{-- 権限 --}}
-                    <x-jet-label for="" value="権限" class="mb-1"/>
+                    <x-jet-label for="" value="{{ __('staff.label.privileges') }}" class="mb-1"/>
                     <span class="error-msg">{{ $errors->first('privileges') }}</span>
                     <div class="flex">
                         @foreach (__('common.privileges') as $key => $privileges)
@@ -57,7 +57,7 @@
                         @endforeach
                     </select>
                     <x-jet-button class="mt-3">
-                        {{ __('common.edit') }}
+                        {{ __('common.btn.edit') }}
                     </x-jet-button>
                 </form>
             </div>

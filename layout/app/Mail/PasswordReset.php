@@ -30,9 +30,12 @@ class PasswordReset extends Mailable
      */
     public function build()
     {
-        return $this->from('test@example.com', 'キャンパ')
-            ->subject('パスワードリセット')
+        $viewAssign = [
+            'token' => $this->token,
+        ];
+        return $this->from(config('mail.from.address'), config('mail.from.name'))
+            ->subject(__('mail.passwordReset'))
             ->view('emails.password_reset')
-            ->with('token', $this->token);
+            ->with('data', $viewAssign);
     }
 }

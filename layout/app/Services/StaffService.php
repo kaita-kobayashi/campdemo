@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Mail\FirstLogin;
+use App\Models\PasswordReset;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use App\Services\CommonService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class StaffService extends CommonService
 {
@@ -53,14 +57,32 @@ class StaffService extends CommonService
     {
         $formInput = [
             'email_address' => $formInput['email_address'],
-            'password' => Hash::make($formInput['password']),
+            'password' => Hash::make(''),
             'last_name' => $formInput['last_name'],
             'first_name' => $formInput['first_name'],
             'privileges' => json_encode($formInput['privileges']),
             'status' => 0,
         ];
         $this->model->createStaff($formInput);
-        // 成功したらメール送信
+        // メール送信
+        $this->sendFirstLoginMail($formInput['email_address']);
+    }
+
+    /**
+     * 初回ログインメール送信
+     *
+     * @param string $email
+     * @return void
+     */
+    public function sendFirstLoginMail(string $email): void
+    {
+        // トークン作成
+        $token = Hash::make(Str::random(40));
+        // トークン格納
+        $passwordReset = new PasswordReset();
+        $passwordReset->setToken($email, $token);
+        // メール送信
+        Mail::to(['email' => $email])->send(new FirstLogin($token, $email));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FirstLoginRequest;
 use App\Mail\TwoFactorAuthPassword;
 use App\Models\Staff;
 use App\Models\User;
@@ -49,10 +50,7 @@ class LoginController extends AuthenticatedSessionController
                 Mail::to(['email' => $user->email_address])->send(new TwoFactorAuthPassword($randomPassword));
 
                 // OTP入力画面表示
-                $viewAssign = [
-                    'user_id' => $user->id,
-                ];
-                return view('login.two_factor_auth', $viewAssign);
+                return redirect('two_factor_auth?id=' . $user->id);
             } else {
                 // 二要素認証なしでログイン
                 $this->service->execLogin($user, $request);
@@ -63,28 +61,44 @@ class LoginController extends AuthenticatedSessionController
     }
 
     /**
-     * ２段階認証
+     * 2要素認証画面表示
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\View\View
+     */
+    public function getTwoFactorAuth(Request $request): mixed
+    {
+        $viewAssign = [
+            'user_id' => $request->id,
+        ];
+        return view('login.two_factor_auth', $viewAssign);
+    }
+
+    /**
+     * 2要素認証
      *
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function twoFactorAuth(Request $request): mixed
+    public function postTwoFactorAuth(Request $request): mixed
     {
         $result = false;
         if ($request->filled('tfa_token', 'user_id')) {
             $user = Staff::find($request->user_id);
-            $expiration = new Carbon($user->tfa_expiration);
-            // トークン一致、かつ10分以内
-            if ($user->tfa_token === $request->tfa_token && $expiration > now()) {
-                $this->service->execLogin($user, $request);
-                $result = true;
+            if (!is_null($user)) {
+                $expiration = new Carbon($user->tfa_expiration);
+                // トークン一致、かつ10分以内
+                if ($user->tfa_token === $request->tfa_token && $expiration > now()) {
+                    $this->service->execLogin($user, $request);
+                    $result = true;
+                }
             }
         }
 
         if ($result) {
             return redirect('home');
         } else {
-            return redirect('login')->withErrors('2要素認証に失敗しました。');
+            return redirect('two_factor_auth?id=' . $user->id)->withErrors('2要素認証に失敗しました。');
         }
     }
 
@@ -98,5 +112,35 @@ class LoginController extends AuthenticatedSessionController
     {
         $this->service->setLog('execLogout', Auth::user(), $request);
         return parent::destroy($request);
+    }
+
+    /**
+     * 初回ログイン画面表示
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function getFirstLogin(Request $request): \Illuminate\View\View
+    {
+        $viewAssign = [
+            'token' => $request->token,
+            'email' => $request->email,
+        ];
+        return view('login.first_login', $viewAssign);
+    }
+
+    /**
+     * 初回ログインパスワード設定
+     *
+     * @param \App\Http\Requests\FirstLoginRequest
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postFirstLogin(FirstLoginRequest $request): \Illuminate\Http\RedirectResponse
+    {
+        // パスワード更新
+        $user = $this->service->updatePassword($request->all());
+        // ホーム画面にリダイレクト
+        $this->service->execLogin($user, $request);
+        return redirect('home');
     }
 }

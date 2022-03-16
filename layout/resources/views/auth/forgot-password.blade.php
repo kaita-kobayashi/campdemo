@@ -20,13 +20,13 @@
             @csrf
 
             <div class="block">
-                <x-jet-label for="email" value="メールアドレス" />
+                <x-jet-label for="email" value="{{ __('login.label.email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email_address" :value="old('email_address')" required autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <x-jet-button>
-                    パスワード再設定メールを送信する
+                    {{ __('login.btn.send_reset_password') }}
                 </x-jet-button>
             </div>
         </form>

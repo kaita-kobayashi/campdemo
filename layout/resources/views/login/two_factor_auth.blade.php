@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('twoFactorAuth') }}">
+        <form method="POST" action="{{ route('postTwoFactorAuth') }}">
             @csrf
             
             <div>

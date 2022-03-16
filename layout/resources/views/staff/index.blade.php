@@ -13,36 +13,36 @@
                 </div>
                 <form action="{{ route('postStaffSearch') }}" method="POST" class="mt-5 search-form-content">
                     @csrf
-                    <x-jet-label for="staff_id" value="ID" />
+                    <x-jet-label for="staff_id" value="{{ __('staff.label.id') }}" />
                     <x-jet-input id="staff_id" class="block mt-1" type="text" name="id" :value="old('staff_id', $search['id'])" />
-                    <x-jet-label for="email_address" value="メールアドレス" />
+                    <x-jet-label for="email_address" value="{{ __('staff.label.email') }}" />
                     <x-jet-input id="email_address" class="block mt-1" type="text" name="email_address" :value="old('email_address', $search['email_address'])" />
-                    <x-jet-label for="last_name" value="性" />
+                    <x-jet-label for="last_name" value="{{ __('staff.label.last_name') }}" />
                     <x-jet-input id="last_name" class="block mt-1" type="text" name="last_name" :value="old('last_name', $search['last_name'])" />
-                    <x-jet-label for="first_name" value="名" />
+                    <x-jet-label for="first_name" value="{{ __('staff.label.first_name') }}" />
                     <x-jet-input id="first_name" class="block mt-1" type="text" name="first_name" :value="old('first_name', $search['first_name'])" />
-                    <x-jet-label for="status" value="ステータス" />
+                    <x-jet-label for="status" value="{{ __('staff.label.status') }}" />
                     <select name="status" id="status" class="block mt-1 border-gray-300 shadow-sm rounded-md">
-                        <option @if ($search['status'] === '' || $search['status'] === '未選択') selected @endif >{{ __('common.search.default') }}</option>
+                        <option @if ($search['status'] === '' || $search['status'] === __('common.search_default')) selected @endif >{{ __('common.search_default') }}</option>
                         @foreach ( __('staff.status') as $key => $value)
                             <option value={{ $key }} @if ($search['status'] == $key) selected @endif>{{ $value }}</option>
                         @endforeach
                     </select>
                     <x-jet-button class="mt-3">
-                        {{ __('common.search.btn') }}
+                        {{ __('common.btn.search') }}
                     </x-jet-button>
                 </form>
             </div>
             <div class="p-2 mt-10 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex justify-between">
                     <div class="font-semibold">{{ __('staff.title.list') }}</div>
-                    <a href="{{ route('getStaffCreate') }}" class="mr-4">{{ __('common.create') }}</a>
+                    <a href="{{ route('getStaffCreate') }}" class="mr-4">{{ __('common.links.create') }}</a>
                 </div>
-                <form action="{{ route('postStaff') }}" method="POST" name="showNum">
+                <form action="{{ route('postStaff') }}" method="POST" name="show_num">
                     @csrf
-                    <select name="showNum" id="showNum" class="block mt-5 border-gray-300 shadow-sm rounded-md" onchange="document.showNum.submit()">
-                        @foreach ( __('common.showNum') as $key => $value)
-                            <option value={{ $key }} @if ($showNum == $key) selected @endif>{{ $value }}</option>
+                    <select name="show_num" id="show_num" class="block mt-5 border-gray-300 shadow-sm rounded-md" onchange="document.show_num.submit()">
+                        @foreach ( __('common.show_num') as $key => $value)
+                            <option value={{ $key }} @if ($show_num == $key) selected @endif>{{ $value }}</option>
                         @endforeach
                     </select>
                 </form>

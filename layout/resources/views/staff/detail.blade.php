@@ -54,12 +54,12 @@
                 <div class="mt-3">
                     <a href="{{ route('getStaffEdit', ['id' => $result->id]) }}">
                         <x-jet-button>
-                            {{ __('common.edit') }}
+                            {{ __('common.btn.edit') }}
                         </x-jet-button>
                     </a>
                     <a href="#">
                         <x-jet-button>
-                            {{ __('common.delete') }}
+                            {{ __('common.btn.delete') }}
                         </x-jet-button>
                     </a>
                 </div>
