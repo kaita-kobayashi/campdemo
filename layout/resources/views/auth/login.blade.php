@@ -14,6 +14,7 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
+            @captcha
 
             <div>
                 <x-jet-label for="email" value="{{ __('login.label.email') }}" />
@@ -46,3 +47,8 @@
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>
+<script>
+    $(document).ready(function() {
+        $("#regForm").submit();
+    });
+</script>
