@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FirstLoginRequest;
+use App\Http\Requests\LoginRequest;
 use App\Mail\TwoFactorAuthPassword;
 use App\Models\Staff;
 use App\Models\User;
@@ -16,7 +17,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\LogoutResponse;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-use Laravel\Fortify\Http\Requests\LoginRequest;
 
 class LoginController extends AuthenticatedSessionController
 {
@@ -34,7 +34,7 @@ class LoginController extends AuthenticatedSessionController
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function store(Request $request): mixed
+    public function postLogin(LoginRequest $request): mixed
     {
         $credentials = $request->only('email_address', 'password');
         if (Auth::validate($credentials)) {
