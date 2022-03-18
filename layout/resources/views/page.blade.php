@@ -43,13 +43,17 @@
             <div>
                 <span class="relative z-0 inline-flex shadow-sm rounded-md">
                     {{-- 最初のページ --}}
-                    <div class="page-item relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-gray-300 border cursor-default rounded-l-md leading-5">
-                        <a class="page-link w-5 h-5 text-center" href="{{ $paginator->url(1) }}" style="font-size:1.75rem;">&laquo;</a>
-                    </div>
+                    <a href="{{ $paginator->url(1) }}">
+                        <div class="w-10 text-center page-item items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-gray-300 border cursor-default rounded-l-md leading-5" style="font-size:1.75rem;">
+                            &laquo;
+                        </div>
+                    </a>
                     {{-- 前のページ --}}
-                    <div class="page-item relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-gray-300 border-t border-b cursor-default leading-5">
-                        <a class="page-link w-5 h-5 text-center" href="{{ $paginator->previousPageUrl() }}" style="font-size:1.75rem;">&lsaquo;</a>
-                    </div>
+                    <a  href="{{ $paginator->previousPageUrl() }}">
+                        <div class="w-10 text-center page-item items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border-gray-300 border-t border-b cursor-default leading-5" style="font-size: 1.75rem;">
+                            &lsaquo;
+                        </div>
+                    </a>
                     {{-- 各ページ --}}
                     @php
                         if ($paginator->lastPage() > __('common.paginateLink')) {
@@ -70,19 +74,23 @@
                     @endphp
                     @for ($i = $start_page; $i <= $end_page; $i++)
                         @if ($i == $paginator->currentPage())
-                            <div class="page-item relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5"><span class="page-link">{{ $i }}</span></div>
+                            <div class="bg-slate-300 page-item relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5"><span class="page-link">{{ $i }}</span></div>
                         @else
-                            <div class="page-item relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5"><a class="page-link" href="{{ $paginator->url($i) }}">{{ $i }}</a></div>
+                            <a class="page-link" href="{{ $paginator->url($i) }}"><div class="page-item relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5">{{ $i }}</div></a>
                         @endif
                     @endfor
                     {{-- 次のページ --}}
-                    <div class="page-item relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5">
-                        <a class="page-link w-5 h-5 text-center" href="{{ $paginator->nextPageUrl() }}" style="font-size:1.75rem;">&rsaquo;</a>
-                    </div>
+                    <a href="{{ $paginator->nextPageUrl() }}">
+                        <div class="w-10 text-center page-item items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5" style="font-size:1.75rem;">
+                            &rsaquo;
+                        </div>
+                    </a>
                     {{-- 最後のページ --}}
-                    <div class="page-item relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5">
-                        <a class="page-link w-5 h-5 text-center" href="{{ $paginator->url($paginator->lastPage()) }}" style="font-size:1.75rem;">&raquo;</a>
-                    </div>
+                    <a href="{{ $paginator->url($paginator->lastPage()) }}">
+                        <div class="w-10 text-center page-item items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5" style="font-size:1.75rem;">
+                            &raquo;
+                        </div>
+                    </a>
                 </span>
             </div>
         </div>

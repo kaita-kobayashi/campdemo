@@ -135,12 +135,3 @@
         </div>
     </div>
 </nav>
-
-<script>
-    const nav_toggle = document.getElementById('nav_toggle');
-    const nav = document.getElementById('nav');
-    nav_toggle.onclick = function () {
-        nav_toggle.classList.toggle('show');
-        nav.classList.toggle('show');
-    }
-</script>

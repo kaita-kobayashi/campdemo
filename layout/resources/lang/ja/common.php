@@ -12,6 +12,11 @@ return [
         'create' => '登録',
         'home' => 'ホーム',
         'login' => 'ログイン',
+        'nav' => [
+            'home' => 'ホーム',
+            'staff' => 'スタッフ',
+            'account' => 'アカウント',
+        ]
     ],
     'exception' => '例外',
     'search_default' => '未選択',

@@ -34,7 +34,7 @@
                 </form>
             </div>
             <div class="p-2 mt-10 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="flex justify-between">
+                <div class="flex justify-between content-header">
                     <div class="font-semibold">{{ __('staff.title.list') }}</div>
                     <a href="{{ route('getStaffCreate') }}" class="mr-4">{{ __('common.links.create') }}</a>
                 </div>
@@ -47,7 +47,7 @@
                     </select>
                 </form>
                 {{ $result->links('page') }}
-                <table class="w-full table-auto mt-5" id="staffs">
+                <table class="w-full table-auto mt-5 data-table" id="staffs">
                     <thead>
                         <tr class="text-left">
                             <th class="sort" data-sort="id">{{ __('staff.tableHeader.id') }}</th>
@@ -85,6 +85,7 @@
 
     // アコーディオン
     document.querySelector('.search-form').onclick = function () {
+        document.querySelector('.search-form').classList.toggle('is-open');
         document.querySelector('.search-form-content').classList.toggle('is-open');
     }
 </script>

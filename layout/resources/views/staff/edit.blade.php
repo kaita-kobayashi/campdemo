@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-2 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="flex justify-between">
+                <div class="flex justify-between content-header">
                     <div class="font-semibold">{{ __('staff.title.edit') }}</div>
                     <div>
                         <a href="{{ route('getStaffDetail', ['id' => $result->id]) }}" class="mr-4">{{ __('staff.links.backDetail') }}</a>
