@@ -29,6 +29,9 @@ class StaffService extends CommonService
      */
     public function getStaffList(array $search, string $showNum): \Illuminate\Pagination\LengthAwarePaginator
     {
+        if (array_key_exists('status', $search) && $search['status'] === __('common.search_default')) {
+            unset($search['status']);
+        }
         $result = $this->model->getStaffList($search, $showNum);
         return $result;
     }

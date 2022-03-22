@@ -17,6 +17,7 @@ use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Kyslik\ColumnSortable\Sortable;
 
 class Staff extends Authenticatable
 {
@@ -25,6 +26,7 @@ class Staff extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use Sortable;
 
     public $timestamps = false;
     protected $table = 'staff';
@@ -38,6 +40,25 @@ class Staff extends Authenticatable
         'status',
         'login_date',
     ];
+    public $sortable = [
+        'id',
+        'email_address',
+        'status',
+        'created_date',
+        'updated_date',
+    ];
+
+    /**
+     * 名称ソート用
+     *
+     * @param Illuminate\Database\Eloquent\Builder
+     * @param string $direction
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function nameSortable(Builder $query, string $direction): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->orderBy('last_name', $direction)->orderBy('first_name', $direction);
+    }
 
     /**
      * 検索カラム
@@ -108,7 +129,7 @@ class Staff extends Authenticatable
     {
         $result = $this
             ->search($search)
-            ->orderBy('staff.id')
+            ->sortable()
             ->paginate((int)$showNum);
 
         return $result;

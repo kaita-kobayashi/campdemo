@@ -1,4 +1,4 @@
-.data-table a {
+.data-table-body a {
   color: rgb(6,69,173);
   text-decoration: underline;
 }
@@ -61,10 +61,11 @@
   margin-top: 5px;
 }
 
-.sort.desc:after {
+.sort-desc:after {
   content:"▼";
 }
-.sort.asc:after {
+
+.sort-asc:after {
   content:"▲";
 }
 

@@ -46,27 +46,31 @@
                         @endforeach
                     </select>
                 </form>
-                {{ $result->links('page') }}
+                {{ $result->appends(request()->query())->links('page') }}
                 <table class="w-full table-auto mt-5 data-table" id="staffs">
-                    <thead>
+                    <thead class="data-table-head">
+                        @php
+                            $sort = request('sort');
+                            $direction = request('direction');
+                        @endphp
                         <tr class="text-left">
-                            <th class="sort" data-sort="id">{{ __('staff.tableHeader.id') }}</th>
-                            <th class="sort" data-sort="name">{{ __('staff.tableHeader.name') }}</th>
-                            <th class="sort" data-sort="email">{{ __('staff.tableHeader.email') }}</th>
-                            <th class="sort" data-sort="status">{{ __('staff.tableHeader.status') }}</th>
-                            <th class="sort" data-sort="created">{{ __('staff.tableHeader.created') }}</th>
-                            <th class="sort" data-sort="updated">{{ __('staff.tableHeader.updated') }}</th>
+                            <th @if (!is_null($sort) && $sort === "id") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('id', __('staff.tableHeader.id'))</th>
+                            <th @if (!is_null($sort) && $sort === "name") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('name', __('staff.tableHeader.name'))</th>
+                            <th @if (!is_null($sort) && $sort === "email_address") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('email_address', __('staff.tableHeader.email'))</th>
+                            <th @if (!is_null($sort) && $sort === "status") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('status', __('staff.tableHeader.status'))</th>
+                            <th @if (!is_null($sort) && $sort === "created_date") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('created_date', __('staff.tableHeader.created'))</th>
+                            <th @if (!is_null($sort) && $sort === "updated_date") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('updated_date', __('staff.tableHeader.updated'))</th>
                         </tr>
                     </thead>
-                    <tbody class="list">
+                    <tbody class="data-table-body"> 
                         @foreach ($result as $data)
                             <tr>
-                                <td class="id"><a href="{{ route('getStaffDetail', ['id' => $data['id']]) }}">{{ $data['id'] }}</a></td>
-                                <td class="name">{{ $data['last_name'] . ' ' . $data['first_name'] }}</td>
-                                <td class="email">{{ $data['email_address'] }}</td>
-                                <td class="status">{{ __('staff.status.' . $data['status']) }}</td>
-                                <td class="created">{{ $data['created_date'] }}</td>
-                                <td class="updated">{{ $data['updated_date'] }}</td>
+                                <td><a href="{{ route('getStaffDetail', ['id' => $data['id']]) }}">{{ $data['id'] }}</a></td>
+                                <td>{{ $data['last_name'] . ' ' . $data['first_name'] }}</td>
+                                <td>{{ $data['email_address'] }}</td>
+                                <td>{{ __('staff.status.' . $data['status']) }}</td>
+                                <td>{{ $data['created_date'] }}</td>
+                                <td>{{ $data['updated_date'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -77,12 +81,6 @@
 </x-app-layout>
 
 <script>
-    // ソート
-    var options = {
-        valueNames: [ 'id', 'name', 'email', 'status', 'created', 'updated' ]
-    };
-    var staffList = new List('staffs', options);
-
     // アコーディオン
     document.querySelector('.search-form').onclick = function () {
         document.querySelector('.search-form').classList.toggle('is-open');
