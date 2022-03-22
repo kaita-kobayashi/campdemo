@@ -53,6 +53,9 @@
                     <x-jet-label for="status" value="ステータス" class="mt-1"/>
                     <select name="status" id="status" class="block mt-1 border-gray-300 shadow-sm rounded-md">
                         @foreach ( __('staff.status') as $key => $value)
+                            @if ($value === __('staff.status.0'))
+                                @continue
+                            @endif
                             <option value={{ $key }} @if ($key === $result->status) selected @endif>{{ $value }}</option>
                         @endforeach
                     </select>
