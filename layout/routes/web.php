@@ -26,6 +26,8 @@ Route::get('/', function () {
         return redirect('login');
     }
 });
+Route::get('first_login', [LoginController::class, 'getFirstLogin'])->name('getFirstLogin');
+Route::post('first_login', [LoginController::class, 'postFirstLogin'])->name('postFirstLogin');
 Route::group(['middleware' => ['guest:web']], function () {
     Route::get('login', [LoginController::class, 'create'])->name('login');
     $limiter = config('fortify.limiters.login');
@@ -42,8 +44,6 @@ Route::group(['middleware' => ['guest:web']], function () {
     Route::get('/exception', function () {
         return view('errors.exception');
     })->name('exception');
-    Route::get('first_login', [LoginController::class, 'getFirstLogin'])->name('getFirstLogin');
-    Route::post('first_login', [LoginController::class, 'postFirstLogin'])->name('postFirstLogin');
 });
 
 // 画面

@@ -121,6 +121,7 @@ class LoginService extends CommonService
     {
         $user = Staff::where('email_address', $formInput['email'])->first();
         $user->password = Hash::make($formInput['password']);
+        $user->status = 1;  // 仮登録→本登録
         $user->save();
 
         PasswordReset::where('email', $formInput['email'])->delete();
