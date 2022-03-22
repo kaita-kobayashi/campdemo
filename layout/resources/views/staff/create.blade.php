@@ -15,26 +15,35 @@
                 <form action="{{ route('postStaffCreate') }}" method="POST" class="mt-5">
                     @csrf
                     {{-- メールアドレス --}}
-                    <x-jet-label for="email_address" value="{{ __('staff.label.email') }}" />
+                    <x-jet-label for="email_address" value="{{ __('staff.label.email') }}" class="mt-5"/>
                     <span class="error-msg">{{ $errors->first('email_address') }}</span>
                     <x-jet-input id="email_address" class="block mt-1" type="email" name="email_address" :value="old('email_address')" />
                     {{-- 性 --}}
-                    <x-jet-label for="last_name" value="{{ __('staff.label.last_name') }}" />
+                    <x-jet-label for="last_name" value="{{ __('staff.label.last_name') }}" class="mt-5"/>
                     <span class="error-msg">{{ $errors->first('last_name') }}</span>
                     <x-jet-input id="last_name" class="block mt-1" type="text" name="last_name" :value="old('last_name')"/>
                     {{-- 名 --}}
-                    <x-jet-label for="first_name" value="{{ __('staff.label.first_name') }}" />
+                    <x-jet-label for="first_name" value="{{ __('staff.label.first_name') }}" class="mt-5"/>
                     <span class="error-msg">{{ $errors->first('first_name') }}</span>
                     <x-jet-input id="first_name" class="block mt-1" type="text" name="first_name" :value="old('first_name')" />
                     {{-- 権限 --}}
-                    <x-jet-label for="" value="{{ __('staff.label.privileges') }}" class="mb-1"/>
+                    <x-jet-label for="" value="{{ __('staff.label.privileges') }}" class="mt-5"/>
                     <span class="error-msg">{{ $errors->first('privileges') }}</span>
-                    <div class="flex">
-                        @foreach (__('common.privileges') as $key => $privileges)
-                            <x-jet-label for="{{ $privileges }}" value="{{$privileges}}" />
-                            <x-jet-input id="{{ $privileges }}" class="block mx-2" type="checkbox" name="privileges[]" value="{{ $key }}" />
+                    <table class="table-auto ml-5">
+                        @foreach (__('common.privileges') as $privilegeTop => $privileges)
+                            <tr>
+                                <th class="flex">
+                                    <x-jet-label for="{{ $privilegeTop }}" value="{{ __('common.privileges_top.' . $privilegeTop) }}"/>
+                                </th>
+                                <td class="flex ml-5">
+                                    @foreach ($privileges as $key => $privilege)    
+                                        <x-jet-label for="{{ $privilegeTop . $privilege }}" value="{{$privilege}}" />
+                                        <x-jet-input id="{{ $privilegeTop . $privilege }}" class="block mx-2 {{ $privilegeTop }}" type="checkbox" name="privileges[]" value="{{ $privilegeTop . $key }}" checked/>
+                                    @endforeach
+                                </td>
+                            </tr>
                         @endforeach
-                    </div>
+                    </table>
                     <x-jet-button class="mt-3">
                         {{ __('common.btn.create') }}
                     </x-jet-button>

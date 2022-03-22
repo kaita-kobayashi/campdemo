@@ -51,6 +51,7 @@ class StaffRequest extends FormRequest
                 'first_name' => 'required|max:20',
                 'privileges' => 'required',
                 'status' => 'required',
+                'tfa_setting' => 'required',
             ];
         }
         return $rule;

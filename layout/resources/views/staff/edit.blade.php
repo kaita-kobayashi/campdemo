@@ -25,32 +25,46 @@
                     <span class="error-msg">{{ $errors->first('email_address') }}</span>
                     <x-jet-input id="email_address" class="block mt-1 w-72" type="email" name="email_address" :value="old('email_address', $result->email_address)" />
                     {{-- パスワード --}}
-                    <x-jet-label for="password" value="{{ __('staff.label.password') }}" />
+                    <x-jet-label for="password" value="{{ __('staff.label.password') }}" class="mt-4"/>
                     <span class="error-msg">{{ $errors->first('password') }}</span>
                     <x-jet-input id="password" class="block mt-1 w-72" type="password" name="password" :value="old('password')" placeholder="更新する場合は入力してください。"/>
                     {{-- 性 --}}
-                    <x-jet-label for="last_name" value="{{ __('staff.label.last_name') }}" />
+                    <x-jet-label for="last_name" value="{{ __('staff.label.last_name') }}" class="mt-4"/>
                     <span class="error-msg">{{ $errors->first('last_name') }}</span>
                     <x-jet-input id="last_name" class="block mt-1 w-72" type="text" name="last_name" :value="old('last_name', $result->last_name)" />
                     {{-- 名 --}}
-                    <x-jet-label for="first_name" value="{{ __('staff.label.first_name') }}" />
+                    <x-jet-label for="first_name" value="{{ __('staff.label.first_name') }}" class="mt-4"/>
                     <span class="error-msg">{{ $errors->first('first_name') }}</span>
                     <x-jet-input id="first_name" class="block mt-1 w-72" type="text" name="first_name" :value="old('first_name', $result->first_name)" />
                     {{-- 権限 --}}
-                    <x-jet-label for="" value="{{ __('staff.label.privileges') }}" class="mb-1"/>
+                    <x-jet-label for="" value="{{ __('staff.label.privileges') }}" class="mt-4"/>
                     <span class="error-msg">{{ $errors->first('privileges') }}</span>
-                    <div class="flex">
-                        @foreach (__('common.privileges') as $key => $privileges)
-                            <x-jet-label for="{{ $privileges }}" value="{{$privileges}}" />
-                            @if (in_array($key, $result->privileges))
-                                <x-jet-input id="{{ $privileges }}" class="block mx-2" type="checkbox" name="privileges[]" value="{{ $key }}" checked/>
-                            @else
-                                <x-jet-input id="{{ $privileges }}" class="block mx-2" type="checkbox" name="privileges[]" value="{{ $key }}"/>
-                            @endif
+                    <table class="table-auto ml-5">
+                        @foreach (__('common.privileges') as $privilegeTop => $privileges)
+                            <tr>
+                                <th class="flex">
+                                    <x-jet-label for="{{ $privilegeTop }}" value="{{ __('common.privileges_top.' . $privilegeTop) }}"/>
+                                </th>
+                                <td class="flex ml-5">
+                                    @foreach ($privileges as $key => $privilege)    
+                                        <x-jet-label for="{{ $privilegeTop . $privilege }}" value="{{$privilege}}" />
+                                        @php
+                                            $array = !empty($result->privileges) && property_exists($result->privileges, str_replace('-', '', $privilegeTop))
+                                                ? $result->privileges->{str_replace('-', '', $privilegeTop)}
+                                                : [];
+                                        @endphp
+                                        @if (in_array($key, $array))
+                                            <x-jet-input id="{{ $privilegeTop . $privilege }}" class="block mx-2 {{ $privilegeTop }}" type="checkbox" name="privileges[]" value="{{ $privilegeTop . $key }}" checked/>
+                                        @else
+                                            <x-jet-input id="{{ $privilegeTop . $privilege }}" class="block mx-2 {{ $privilegeTop }}" type="checkbox" name="privileges[]" value="{{ $privilegeTop . $key }}"/>
+                                        @endif
+                                    @endforeach
+                                </td>
+                            </tr>
                         @endforeach
-                    </div>
+                    </table>
                     {{-- ステータス --}}
-                    <x-jet-label for="status" value="ステータス" class="mt-1"/>
+                    <x-jet-label for="status" value="{{ __('staff.label.status') }}" class="mt-4"/>
                     <select name="status" id="status" class="block mt-1 border-gray-300 shadow-sm rounded-md">
                         @foreach ( __('staff.status') as $key => $value)
                             @if ($value === __('staff.status.0'))
@@ -59,6 +73,23 @@
                             <option value={{ $key }} @if ($key === $result->status) selected @endif>{{ $value }}</option>
                         @endforeach
                     </select>
+                    {{-- 2要素認証 --}}
+                    <x-jet-label for="tfa_setting" value="{{ __('staff.label.tfa_setting') }}" class="mt-4"/>
+                    <div class="flex mt-2">
+                        <x-jet-label for="on" value="{{ __('staff.radio.tfa_setting.on') }}"/>
+                        @if ($result->tfa_setting)
+                            <x-jet-input id="on" type="radio" value="1" name="tfa_setting" class="mx-2" checked/>
+                        @else
+                            <x-jet-input id="on" type="radio" value="1" name="tfa_setting" class="mx-2"/>
+                        @endif
+                        <x-jet-label for="off" value="{{ __('staff.radio.tfa_setting.off') }}"/>
+                        @if (!$result->tfa_setting)
+                            <x-jet-input id="off" type="radio" value="0" name="tfa_setting" class="mx-2" checked/>
+                        @else
+                            <x-jet-input id="off" type="radio" value="0" name="tfa_setting" class="mx-2"/>
+                        @endif
+                    </div>
+
                     <x-jet-button class="mt-3">
                         {{ __('common.btn.edit') }}
                     </x-jet-button>

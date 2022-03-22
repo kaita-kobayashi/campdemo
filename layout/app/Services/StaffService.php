@@ -63,7 +63,7 @@ class StaffService extends CommonService
             'password' => Hash::make(''),
             'last_name' => $formInput['last_name'],
             'first_name' => $formInput['first_name'],
-            'privileges' => json_encode($formInput['privileges']),
+            'privileges' => json_encode($this->convertPrivileges($formInput['privileges'])),
             'status' => 0,
         ];
         $this->model->createStaff($formInput);
@@ -100,12 +100,35 @@ class StaffService extends CommonService
             'email_address' => $formInput['email_address'],
             'last_name' => $formInput['last_name'],
             'first_name' => $formInput['first_name'],
-            'privileges' => json_encode($formInput['privileges']),
+            'privileges' => json_encode($this->convertPrivileges($formInput['privileges'])),
             'status' => $formInput['status'],
+            'tfa_setting' => $formInput['tfa_setting'],
         ];
         if (!is_null($formInput['password'])) {
             $updateForm['password'] = Hash::make($formInput['password']);
         }
         $this->model->updateStaff($updateForm, $formInput['id']);
+    }
+
+    /**
+     * 権限配列作成
+     *
+     * @param array $privileges
+     * @return array
+     */
+    public function convertPrivileges(array $privileges): array
+    {
+        if (empty($privileges)) {
+            return $privileges;
+        }
+        $result = [];
+        foreach ($privileges as $privilege) {
+            $split = explode('-', $privilege);
+            if (!array_key_exists($split[0], $result)) {
+                $result[$split[0]] = [];
+            }
+            $result[$split[0]][] = $split[1];
+        }
+        return $result;
     }
 }

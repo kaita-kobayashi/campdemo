@@ -28,19 +28,54 @@
                     <tr>
                         <th class="border">{{ __('staff.tableHeader.privileges') }}</th>
                         <td class="py-1 border-r pl-4 flex" style="margin-right:-0.03rem;">
-                            @foreach (__('common.privileges') as $key => $privileges)
-                                <x-jet-label for="{{ $privileges }}" value="{{$privileges}}" />
-                                @if (in_array($key, $result->privileges))
-                                    <x-jet-input id="{{ $privileges }}" class="block mx-2" type="checkbox" disabled checked />
-                                @else
-                                    <x-jet-input id="{{ $privileges }}" class="block mx-2" type="checkbox" disabled />
-                                @endif
-                            @endforeach
+                            <table class="table-auto">
+                                @foreach (__('common.privileges') as $privilegeTop => $privileges)
+                                    <tr>
+                                        <th class="flex">
+                                            <x-jet-label for="{{ $privilegeTop }}" value="{{ __('common.privileges_top.' . $privilegeTop) }}"/>
+                                        </th>
+                                        <td class="flex ml-5">
+                                            @foreach ($privileges as $key => $privilege)
+                                                <x-jet-label for="{{ $privilegeTop . $privilege }}" value="{{$privilege}}" />
+                                                @php
+                                                    $array = !empty($result->privileges) && property_exists($result->privileges, str_replace('-', '', $privilegeTop))
+                                                        ? $result->privileges->{str_replace('-', '', $privilegeTop)}
+                                                        : [];
+                                                @endphp
+                                                @if (in_array($key, $array))
+                                                    <x-jet-input id="{{ $privilegeTop . $privilege }}" class="block mx-2 {{ $privilegeTop }}" type="checkbox" disabled checked/>
+                                                @else
+                                                    <x-jet-input id="{{ $privilegeTop . $privilege }}" class="block mx-2 {{ $privilegeTop }}" type="checkbox" disabled/>
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
                         </td>
                     </tr>
                     <tr>
                         <th class="border">{{ __('staff.tableHeader.status') }}</th>
                         <td class="border pl-4">{{ __('staff.status.' . $result['status']) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="border">{{ __('staff.tableHeader.tfa_setting') }}</th>
+                        <td class="border pl-4">
+                            <div class="flex">
+                                <x-jet-label for="on" value="{{ __('staff.radio.tfa_setting.on') }}"/>
+                                @if ($result->tfa_setting)
+                                    <x-jet-input id="on" type="radio" class="mx-2" disabled checked/>
+                                @else
+                                    <x-jet-input id="on" type="radio" class="mx-2" disabled/>
+                                @endif
+                                <x-jet-label for="off" value="{{ __('staff.radio.tfa_setting.off') }}"/>
+                                @if (!$result->tfa_setting)
+                                    <x-jet-input id="off" type="radio" class="mx-2" disabled checked/>
+                                @else
+                                    <x-jet-input id="off" type="radio" class="mx-2" disabled/>
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <th class="border">{{ __('staff.tableHeader.created') }}</th>

@@ -1050,6 +1050,9 @@ select {
 .mb-1 {
   margin-bottom: 0.25rem;
 }
+.ml-5 {
+  margin-left: 1.25rem;
+}
 .block {
   display: block;
 }

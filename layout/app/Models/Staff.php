@@ -39,6 +39,7 @@ class Staff extends Authenticatable
         'privileges',
         'status',
         'login_date',
+        'tfa_setting',
     ];
     public $sortable = [
         'id',

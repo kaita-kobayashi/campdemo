@@ -26,11 +26,24 @@ return [
         '100' => '100件',
     ],
     'privileges' => [
-        'list' => '一覧',
-        'detail' => '詳細',
-        'create' => '登録',
-        'edit' => '編集',
-        'delete' => '削除',
+        'staff-' => [
+            'list' => '一覧',
+            'detail' => '詳細',
+            'create' => '登録',
+            'edit' => '編集',
+            'delete' => '削除',
+        ],
+        'account-' => [
+            'list' => '一覧',
+            'detail' => '詳細',
+            'create' => '登録',
+            'edit' => '編集',
+            'delete' => '削除',
+        ],
+    ],
+    'privileges_top' => [
+        'staff-' => 'スタッフ',
+        'account-' => 'アカウント',
     ],
     'paginateLink' => '5',
 ];

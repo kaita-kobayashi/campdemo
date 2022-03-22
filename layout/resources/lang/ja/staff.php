@@ -19,6 +19,7 @@ return [
         'updated' => '更新日時',
         'last_name' => '性',
         'first_name' => '名',
+        'tfa_setting' => '2要素認証',
     ],
     'status' => [
         '0' => '仮登録',
@@ -33,10 +34,17 @@ return [
         'status' => 'ステータス',
         'privileges' => '権限',
         'password' => 'パスワード',
+        'tfa_setting' => '2要素認証'
     ],
     'links' => [
         'backList' => 'スタッフ一覧',
         'backDetail' => 'スタッフ詳細へ戻る',
+    ],
+    'radio' => [
+        'tfa_setting' => [
+            'on' => 'ON',
+            'off' => 'OFF',
+        ],
     ],
     'customErrMsg' => [
         'duplicateEmail' => 'そのメールアドレスは既に使用されています。'
