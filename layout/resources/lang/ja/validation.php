@@ -164,6 +164,7 @@ return [
         'first_name' => '名',
         'privileges' => '権限',
         'password' => 'パスワード',
+        'tfa_setting' => '2要素認証'
     ],
 
 ];

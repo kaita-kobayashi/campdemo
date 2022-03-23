@@ -23,7 +23,7 @@ class StaffSeeder extends Seeder
             'password' => Hash::make('password'),
             'last_name' => 'kobayashi',
             'first_name' => 'kaita',
-            'privileges' => '[]',
+            'privileges' => '{}',
             'status' => 1,
         ];
         $insertForm[] = [
@@ -31,7 +31,7 @@ class StaffSeeder extends Seeder
             'password' => Hash::make('password'),
             'last_name' => '管理者',
             'first_name' => '太郎',
-            'privileges' => '[]',
+            'privileges' => '{}',
             'status' => 1,
         ];
 
@@ -41,7 +41,7 @@ class StaffSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'last_name' => 'スタッフ',
                 'first_name' => (string)$i,
-                'privileges' => '[]',
+                'privileges' => '{}',
                 'status' => 0,
             ];
         }

@@ -23,7 +23,7 @@
                     <x-jet-input id="first_name" class="block mt-1" type="text" name="first_name" :value="old('first_name', $search['first_name'])" />
                     <x-jet-label for="status" value="{{ __('staff.label.status') }}" />
                     <select name="status" id="status" class="block mt-1 border-gray-300 shadow-sm rounded-md">
-                        <option @if ($search['status'] === '' || $search['status'] === __('common.search_default')) selected @endif >{{ __('common.search_default') }}</option>
+                        <option @if ($search['status'] === '' || $search['status'] === __('common.select_default')) selected @endif >{{ __('common.select_default') }}</option>
                         @foreach ( __('staff.status') as $key => $value)
                             <option value={{ $key }} @if ($search['status'] == $key) selected @endif>{{ $value }}</option>
                         @endforeach
@@ -50,16 +50,16 @@
                 <table class="w-full table-auto mt-5 data-table" id="staffs">
                     <thead class="data-table-head">
                         @php
-                            $sort = request('sort');
-                            $direction = request('direction');
+                            $sort = request('sort') ?? '';
+                            $direction = request('direction') ?? '';
                         @endphp
                         <tr class="text-left">
-                            <th @if (!is_null($sort) && $sort === "id") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('id', __('staff.tableHeader.id'))</th>
-                            <th @if (!is_null($sort) && $sort === "name") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('name', __('staff.tableHeader.name'))</th>
-                            <th @if (!is_null($sort) && $sort === "email_address") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('email_address', __('staff.tableHeader.email'))</th>
-                            <th @if (!is_null($sort) && $sort === "status") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('status', __('staff.tableHeader.status'))</th>
-                            <th @if (!is_null($sort) && $sort === "created_date") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('created_date', __('staff.tableHeader.created'))</th>
-                            <th @if (!is_null($sort) && $sort === "updated_date") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('updated_date', __('staff.tableHeader.updated'))</th>
+                            <th @if ($sort === "id") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('id', __('staff.tableHeader.id'))</th>
+                            <th @if ($sort === "name") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('name', __('staff.tableHeader.name'))</th>
+                            <th @if ($sort === "email_address") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('email_address', __('staff.tableHeader.email'))</th>
+                            <th @if ($sort === "status") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('status', __('staff.tableHeader.status'))</th>
+                            <th @if ($sort === "created_date") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('created_date', __('staff.tableHeader.created'))</th>
+                            <th @if ($sort === "updated_date") class="{{ 'sort-' . $direction }}" @endif>@sortablelink('updated_date', __('staff.tableHeader.updated'))</th>
                         </tr>
                     </thead>
                     <tbody class="data-table-body"> 

@@ -29,7 +29,7 @@ class StaffService extends CommonService
      */
     public function getStaffList(array $search, string $showNum): \Illuminate\Pagination\LengthAwarePaginator
     {
-        if (array_key_exists('status', $search) && $search['status'] === __('common.search_default')) {
+        if (array_key_exists('status', $search) && $search['status'] === __('common.select_default')) {
             unset($search['status']);
         }
         $result = $this->model->getStaffList($search, $showNum);
@@ -123,7 +123,7 @@ class StaffService extends CommonService
         }
         $result = [];
         foreach ($privileges as $privilege) {
-            $split = explode('-', $privilege);
+            $split = explode(__('privileges.separate'), $privilege);
             if (!array_key_exists($split[0], $result)) {
                 $result[$split[0]] = [];
             }
