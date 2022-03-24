@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" id="login_form">
             @csrf
 
             <div>
@@ -39,10 +39,26 @@
                     </a>
                 @endif
 
-                <x-jet-button class="ml-4">
+                <x-jet-button class="ml-4" id="login_btn">
                     {{ __('login.btn.login') }}
                 </x-jet-button>
             </div>
+            {!! no_captcha()->input() !!}
         </form>
     </x-jet-authentication-card>
 </x-guest-layout>
+{!! no_captcha()->script() !!}
+{!! no_captcha()->getApiScript() !!}
+<script>
+    var btn = document.getElementById('login_btn');
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        grecaptcha.ready(function () {
+            const siteKey = @json(config('no-captcha.sitekey'));
+            grecaptcha.execute(siteKey,  {action: 'login'}).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+                document.getElementById('login_form').submit();
+            })
+        })
+    }, false)
+</script>

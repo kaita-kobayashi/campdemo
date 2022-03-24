@@ -15,6 +15,7 @@ return [
         'reset_password' => 'パスワード再設定',
     ],
     'customErrMsg' => [
-        'illegal_transition' => '不正な遷移です。再度URL送信メールをご確認ください。'
+        'illegal_transition' => '不正な遷移です。再度URL送信メールをご確認ください。',
+        'recaptcha_error' => 'reCAPTCHAによってロボットだと判断されました。',
     ],
 ];
