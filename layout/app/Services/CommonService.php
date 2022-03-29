@@ -34,17 +34,4 @@ class CommonService
         }
         Session::put($key, $value);
     }
-
-    /**
-     * 画面権限セッション格納
-     *
-     * @return void
-     */
-    public function setUserPrivileges(): void
-    {
-        if (Auth::check()) {
-            $privileges = json_decode(Auth::user()->privileges, true);
-            $this->setSession(config('const.CONST.SESSION_USER_PRIVILEGES'), $privileges);
-        }
-    }
 }

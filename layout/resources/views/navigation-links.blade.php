@@ -8,7 +8,7 @@
     </x-slot>
     <x-slot name="content">
         @php
-            $privileges = Session::get(config('const.CONST.SESSION_USER_PRIVILEGES'), []);
+            $privileges = json_decode(Auth::user()->privileges, true);
         @endphp
         <ul class="nav_menu">
             <li class="nav_menu_li"><a href="{{ route('home') }}">{{ __('common.links.nav.home') }}</a></li>

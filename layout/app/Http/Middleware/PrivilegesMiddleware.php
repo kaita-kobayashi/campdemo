@@ -43,12 +43,8 @@ class PrivilegesMiddleware
      */
     public function isPermissionError(array $privileges, string $path, string $key): bool
     {
-        if (!array_key_exists($key, $privileges)) {
+        if (!array_key_exists($key, $privileges) || !in_array('list', $privileges[$key])) {
             return true;
-        }
-
-        if (preg_match('/staff$/', $path) || preg_match('/search$/', $path)) {
-            return !in_array('list', $privileges[$key]);
         }
 
         if (preg_match('/detail/', $path)) {
