@@ -28,6 +28,9 @@ Route::get('/', function () {
 });
 Route::get('first_login', [LoginController::class, 'getFirstLogin'])->name('getFirstLogin');
 Route::post('first_login', [LoginController::class, 'postFirstLogin'])->name('postFirstLogin');
+Route::get('/exception', function () {
+    return view('errors.exception');
+})->name('exception');
 Route::group(['middleware' => ['guest:web']], function () {
     Route::get('login', [LoginController::class, 'create'])->name('login');
     $limiter = config('fortify.limiters.login');
@@ -41,9 +44,6 @@ Route::group(['middleware' => ['guest:web']], function () {
 
     Route::get('two_factor_auth', [LoginController::class, 'getTwoFactorAuth'])->name('getTwoFactorAuth');
     Route::post('two_factor_auth', [LoginController::class, 'postTwoFactorAuth'])->name('postTwoFactorAuth');
-    Route::get('/exception', function () {
-        return view('errors.exception');
-    })->name('exception');
 });
 
 // 画面
@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth:web']], function () {
     Route::post('/logout', [LoginController::class, 'destroy'])
         ->name('logout');
     // スタッフ管理
-    Route::group(['prefix' => 'staff'], function () {
+    Route::group(['prefix' => 'staff', 'middleware' => ['privileges:staff']], function () {
         Route::get('/', [StaffController::class, 'getStaff'])->name('getStaff');
         Route::post('/', [StaffController::class, 'postStaff'])->name('postStaff');
         Route::post('/search', [StaffController::class, 'postStaffSearch'])->name('postStaffSearch');

@@ -5,9 +5,9 @@
                 <div class="flex justify-between">
                     <div class="font-semibold">{{ __('common.exception') }}</div>
 					@if (Auth::check())
-						<a href="{{ route('home') }}" class="mr-4">{{ __('common.home') }}</a>
+						<a href="{{ route('home') }}" class="mr-4">{{ __('common.links.home') }}</a>
 					@else
-						<a href="{{ route('login') }}" class="mr-4">{{ __('common.login') }}</a>
+						<a href="{{ route('login') }}" class="mr-4">{{ __('common.links.login') }}</a>
 					@endif
                 </div>
 				@if ($errors->has('exception'))

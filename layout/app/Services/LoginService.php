@@ -56,6 +56,9 @@ class LoginService extends CommonService
         Auth::login($user);
         // ログ作成
         $this->setLog('execLogin', $user, $request);
+        // 権限セッション保持
+        $privileges = json_decode($user->privileges, true);
+        $this->setSession(config('const.CONST.SESSION_USER_PRIVILEGES'), $privileges);
     }
 
     /**

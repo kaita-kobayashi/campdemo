@@ -13,4 +13,8 @@ return [
         'CODE' => 'ERROR-CODE-03',
         'MSG' => 'データの更新に失敗しました。',
     ],
+    'FAILD_PRIVILEGES' => [
+        'CODE' => 'ERROR-CODE-04',
+        'MSG' => '操作に対する権限がありません。',
+    ]
 ];

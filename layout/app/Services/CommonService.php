@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Closure;
 
 class CommonService
 {
@@ -16,11 +17,7 @@ class CommonService
      */
     public function getSession(string $key): mixed
     {
-        if (Session::has($key)) {
-            return Session::get($key);
-        } else {
-            return false;
-        }
+        return Session::get($key, false);
     }
 
     /**
@@ -36,5 +33,18 @@ class CommonService
             Session::forget($key);
         }
         Session::put($key, $value);
+    }
+
+    /**
+     * 画面権限セッション格納
+     *
+     * @return void
+     */
+    public function setUserPrivileges(): void
+    {
+        if (Auth::check()) {
+            $privileges = json_decode(Auth::user()->privileges, true);
+            $this->setSession(config('const.CONST.SESSION_USER_PRIVILEGES'), $privileges);
+        }
     }
 }

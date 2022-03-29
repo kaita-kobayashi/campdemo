@@ -7,6 +7,7 @@ use App\Services\StaffService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Redirector\Illuminate\Http\RedirectResponse;
+use Closure;
 
 class StaffController extends Controller
 {
@@ -15,6 +16,10 @@ class StaffController extends Controller
     public function __construct(StaffService $service)
     {
         $this->service = $service;
+        $this->middleware(function (Request $request, Closure $next) {
+            $this->service->setUserPrivileges();
+            return $next($request);
+        });
     }
 
     /**

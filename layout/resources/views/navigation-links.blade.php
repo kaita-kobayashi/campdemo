@@ -7,10 +7,17 @@
         </span>
     </x-slot>
     <x-slot name="content">
+        @php
+            $privileges = Session::get(config('const.CONST.SESSION_USER_PRIVILEGES'), []);
+        @endphp
         <ul class="nav_menu">
             <li class="nav_menu_li"><a href="{{ route('home') }}">{{ __('common.links.nav.home') }}</a></li>
-            <li class="nav_menu_li"><a href="{{ route('getStaff') }}">{{ __('common.links.nav.staff') }}</a></li>
-            <li class="nav_menu_li"><a href="#">{{ __('common.links.nav.account') }}</a></li>
+            @if (array_key_exists('staff', $privileges) && in_array('list', $privileges['staff']))
+                <li class="nav_menu_li"><a href="{{ route('getStaff') }}">{{ __('common.links.nav.staff') }}</a></li>
+            @endif
+            @if (array_key_exists('account', $privileges) && in_array('list', $privileges['account']))
+                <li class="nav_menu_li"><a href="#">{{ __('common.links.nav.account') }}</a></li>
+            @endif
         </ul>
     </x-slot>
 </x-jet-dropdown>
