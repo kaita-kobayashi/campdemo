@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StaffRequest;
 use App\Services\StaffService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Routing\Redirector\Illuminate\Http\RedirectResponse;
 use Closure;
 
 class StaffController extends Controller

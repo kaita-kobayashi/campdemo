@@ -25,4 +25,6 @@ return [
     'postStaffCreate'       => [ 'event_name' => '2',           'function_name' => __('staff.title.create') ],
     'getStaffDetail'        => [ 'event_name' => '4',           'function_name' => __('staff.title.detail') ],
     'postStaffEdit'         => [ 'event_name' => '3',           'function_name' => __('staff.title.edit') ],
+    'getAnalytics'          => [ 'event_name' => '4',           'function_name' => __('analytics.title.select') ],
+    'postAnalytics'          => [ 'event_name' => '4',           'function_name' => __('analytics.title.summary') ],
 ];

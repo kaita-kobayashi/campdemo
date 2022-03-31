@@ -93,3 +93,9 @@
   font-size: 0.75rem;
   color: red;
 }
+
+.analytics-summay-table th,.analytics-summay-table td {
+  text-align: center;
+  padding: 0.5rem;
+  border-width: 1px;
+}

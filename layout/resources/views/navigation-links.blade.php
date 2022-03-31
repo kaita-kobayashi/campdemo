@@ -18,6 +18,9 @@
             @if (array_key_exists('account', $privileges) && in_array('list', $privileges['account']))
                 <li class="nav_menu_li"><a href="#">{{ __('common.links.nav.account') }}</a></li>
             @endif
+            @if (array_key_exists('analytics', $privileges) && in_array('select', $privileges['analytics']))
+                <li class="nav_menu_li"><a href="{{ route('getAnalytics') }}">{{ __('common.links.nav.analytics') }}</a></li>
+            @endif
         </ul>
     </x-slot>
 </x-jet-dropdown>

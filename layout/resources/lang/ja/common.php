@@ -16,6 +16,7 @@ return [
             'home' => 'ホーム',
             'staff' => 'スタッフ',
             'account' => 'アカウント',
+            'analytics' => 'アナリティクス'
         ]
     ],
     'exception' => '例外',

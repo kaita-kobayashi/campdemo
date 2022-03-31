@@ -18,44 +18,27 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+    public $timestamps = false;
+    protected $table = 'user';
     protected $fillable = [
-        'name',
-        'email',
+        'campaign_id',
+        'email_address',
         'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'two_factor_recovery_codes',
-        'two_factor_secret',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'profile_photo_url',
+        'last_name',
+        'first_name',
+        'last_name_kana',
+        'first_name_kana',
+        'gender',
+        'age',
+        'postal_code',
+        'prefecture',
+        'address',
+        'phone_number',
+        'ip_address',
+        'user_agent',
+        'cookie_id',
+        'status',
+        'login_date',
+        'tfa_setting',
     ];
 }

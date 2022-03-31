@@ -21,10 +21,15 @@ return [
             'edit' => '編集',
             'delete' => '削除',
         ],
+        'analytics' => [
+            'select' => 'キャンペーン選択',
+            'summary' => 'サマリー',
+        ],
     ],
     'privileges_top' => [
         'staff' => 'スタッフ',
         'account' => 'アカウント',
+        'analytics' => 'アナリティクス',
     ],
     'separate' => '-',
 ];

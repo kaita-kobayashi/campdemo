@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Auth;
@@ -63,5 +64,10 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/detail/{id}', [StaffController::class, 'getStaffDetail'])->name('getStaffDetail');
         Route::get('/edit/{id}', [StaffController::class, 'getStaffEdit'])->name('getStaffEdit');
         Route::post('/edit', [StaffController::class, 'postStaffEdit'])->name('postStaffEdit');
+    });
+    // アナリティクス管理
+    Route::group(['prefix' => 'analytics', 'middleware' => ['privileges:analytics']], function () {
+        Route::get('/', [AnalyticsController::class, 'getAnalytics'])->name('getAnalytics');
+        Route::post('/', [AnalyticsController::class, 'postAnalytics'])->name('postAnalytics');
     });
 });

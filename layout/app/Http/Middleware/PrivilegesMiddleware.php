@@ -43,24 +43,31 @@ class PrivilegesMiddleware
      */
     public function isPermissionError(array $privileges, string $path, string $key): bool
     {
-        if (!array_key_exists($key, $privileges) || !in_array('list', $privileges[$key])) {
-            return true;
-        }
+        if ($key === 'analytics') {
+            $str = request()->isMethod('post') ? 'summary' : 'select';
+            if (!array_key_exists($key, $privileges) || !in_array($str, $privileges[$key])) {
+                return true;
+            }
+        } else {
+            if (!array_key_exists($key, $privileges) || !in_array('list', $privileges[$key])) {
+                return true;
+            }
 
-        if (preg_match('/detail/', $path)) {
-            return !in_array('detail', $privileges[$key]);
-        }
+            if (preg_match('/detail/', $path)) {
+                return !in_array('detail', $privileges[$key]);
+            }
 
-        if (preg_match('/create/', $path)) {
-            return !in_array('create', $privileges[$key]);
-        }
+            if (preg_match('/create/', $path)) {
+                return !in_array('create', $privileges[$key]);
+            }
 
-        if (preg_match('/edit/', $path)) {
-            return !in_array('edit', $privileges[$key]) || !in_array('detail', $privileges[$key]);
-        }
+            if (preg_match('/edit/', $path)) {
+                return !in_array('edit', $privileges[$key]) || !in_array('detail', $privileges[$key]);
+            }
 
-        if (preg_match('/delete/', $path)) {
-            return !in_array('delete', $privileges[$key]) || !in_array('detail', $privileges[$key]);
+            if (preg_match('/delete/', $path)) {
+                return !in_array('delete', $privileges[$key]) || !in_array('detail', $privileges[$key]);
+            }
         }
         return false;
     }
