@@ -36,7 +36,7 @@ class AnalyticsController extends Controller
      */
     public function postAnalytics(Request $request): \Illuminate\View\View
     {
-        $result = $this->service->getAnalyticsEntry();
+        $result = $this->service->getAnalyticsEntry($request->campaign);
         $viewAssign = [
             'result' => $result,
         ];

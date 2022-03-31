@@ -20,71 +20,57 @@
                 <table class="text-left table-auto mt-5 analytics-summay-table">
                     <tr>
                         <th></th>
-                        <th>商品A</th>
-                        <th>商品B</th>
-                        <th>商品C</th>
-                        <th>商品D</th>
+                        @foreach ($result['purchaseProducts'] as $name => $quentity)
+                            <th>{{ $name }}</th>
+                        @endforeach
                     </tr>
                     <tr>
                         <th>{{ __('analytics.tableHeader.row.entryProduct') }}</th>
-                        <td>12個</td>
-                        <td>13個</td>
-                        <td>14個</td>
-                        <td>15個</td>
+                        @foreach ($result['purchaseProducts'] as $name => $quentity)
+                            <td>{{ $quentity }}個</td>
+                        @endforeach
                     </tr>
                 </table>
                 <table class="text-left table-auto mt-5 analytics-summay-table">
                     <tr>
                         <th></th>
-                        <th>{{ __('analytics.tableHeader.col.male') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.female') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.nonBinary') }}</th>
+                        @foreach (__('analytics.tableHeader.col.gender') as $key => $gender)
+                            <th>{{ $gender }}</th>
+                        @endforeach
                     </tr>
                     <tr>
                         <th>{{ __('analytics.tableHeader.row.entryGender') }}</th>
-                        <td>{{ 9827 }}人</td>
-                        <td>{{ 8723 }}人</td>
-                        <td>{{ 444 }}人</td>
+                        @foreach (__('analytics.tableHeader.col.gender') as $key => $gender)
+                            <td>{{ $result['genderCount'][$gender] }}人</td>
+                        @endforeach
                     </tr>
                 </table>
                 <table class="text-left table-auto mt-5 analytics-summay-table">
                     <tr>
                         <th></th>
-                        <th>{{ __('analytics.tableHeader.col.10') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.20') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.30') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.40') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.50') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.60') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.overAge') }}</th>
+                        @foreach (__('analytics.tableHeader.col.age') as $key => $age)
+                            <th>{{ $age }}</th>
+                        @endforeach
                     </tr>
                     <tr>
                         <th>{{ __('analytics.tableHeader.row.entryAge') }}</th>
-                        <td>{{ 9827 }}人</td>
-                        <td>{{ 8723 }}人</td>
-                        <td>{{ 444 }}人</td>
-                        <td>{{ 444 }}人</td>
-                        <td>{{ 444 }}人</td>
-                        <td>{{ 444 }}人</td>
-                        <td>{{ 444 }}人</td>
+                        @foreach ($result['ageCount'] as $ages)
+                            <td>{{ $ages['ageCount'] }}人</td>
+                        @endforeach
                     </tr>
                 </table>
                 <table class="text-left table-auto mt-5 analytics-summay-table">
                     <tr>
                         <th></th>
-                        <th>{{ __('analytics.tableHeader.col.1th') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.2th') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.3th') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.4th') }}</th>
-                        <th>{{ __('analytics.tableHeader.col.5th') }}</th>
+                        @foreach (__('analytics.tableHeader.col.eria') as $key => $eria)
+                            <th>{{ $eria }}</th>
+                        @endforeach
                     </tr>
                     <tr>
                         <th>{{ __('analytics.tableHeader.row.entryEria') }}</th>
-                        <td>東京都(234件)</td>
-                        <td>神奈川県(84件)</td>
-                        <td>秋田県(74件)</td>
-                        <td>埼玉県(64件)</td>
-                        <td>沖縄県(34件)</td>
+                        @foreach ($result['prefectureCount'] as $prefectures)
+                            <td>{{ $prefectures['prefecture'] . '(' . $prefectures['prefectureCount'] . '件)' }}</td>
+                        @endforeach
                     </tr>
                 </table>
             </div>

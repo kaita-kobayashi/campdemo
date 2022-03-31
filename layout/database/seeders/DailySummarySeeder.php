@@ -25,10 +25,14 @@ class DailySummarySeeder extends Seeder
         for ($i = 1; $i <= 30; $i++) {
             $campaignId = rand(1, $num);
             $productData = Product::where('campaign_id', $campaignId)->get();
-            $productId = rand(1, $productData->count());
+            if ($campaignId == 1) {
+                $productId = rand(1, 4);
+            } else {
+                $productId = rand(5, 9);
+            }
             $products = [];
             for ($n = 1; $n <= rand(1, 5); $n++) {
-                $products[(string)$n][] = [
+                $products[(string)$n] = [
                     'id' => $productId,
                     'name' => Product::where('id', $productId)->first()->name,
                     'quentity' => rand(1, 99),

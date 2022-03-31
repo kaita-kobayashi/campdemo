@@ -44,7 +44,7 @@ class UserFactory extends Factory
             'last_name_kana' => 'dummy',
             'first_name_kana' => 'dummy',
             'gender' => $genderList[$gender],
-            'age' => $this->faker->numberBetween(1, 99),
+            'age' => $this->faker->numberBetween(10, 99),
             'postal_code' => (string)$this->faker->postcode(),
             'prefecture' => $this->faker->prefecture(),
             'address' => 'dummy',

@@ -18,4 +18,19 @@ class DailySummary extends Model
         'products',
         'prizes',
     ];
+
+    /**
+     * 日時情報取得(一覧)
+     *
+     * @param string $campaignId
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getDailySummayList(string $campaignId = null): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this
+            ->when(!is_null($campaignId), function ($query) use ($campaignId) {
+                return $query->where('campaign_id', $campaignId);
+            })
+            ->get();
+    }
 }

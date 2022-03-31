@@ -26,10 +26,61 @@ class Entry extends Model
     /**
      * 応募情報取得(アナリティクスサマリー)
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param string $campaignId
+     * @return array
      */
-    public function getAnalyticsEntryList(): \Illuminate\Database\Eloquent\Collection
+    public function getAnalyticsEntryList(string $campaignId): array
     {
-        return $this->get();
+        // 性別別集計
+        $genderCount = $this
+            ->select(
+                'user.gender',
+                DB::raw('COUNT(*) AS genderCount')
+            )
+            ->join('user', 'entry.user_id', '=', 'user.id')
+            ->where('entry.campaign_id', $campaignId)
+            ->groupBy('user.gender')
+            ->get();
+
+        // 年齢別集計
+        $ageCount = $this
+            ->select(
+                DB::raw("
+                    CASE
+                        WHEN user.age <= 19 THEN '10s'
+                        WHEN user.age <= 29 THEN '20s'
+                        WHEN user.age <= 39 THEN '30s'
+                        WHEN user.age <= 49 THEN '40s'
+                        WHEN user.age <= 59 THEN '50s'
+                        WHEN user.age <= 69 THEN '60s'
+                        WHEN user.age >= 70 THEN 'overAge'
+                    END AS userAge
+                "),
+                DB::raw('COUNT(*) AS ageCount')
+            )
+            ->join('user', 'entry.user_id', '=', 'user.id')
+            ->where('entry.campaign_id', $campaignId)
+            ->groupBy('userAge')
+            ->orderBy('userAge', 'asc')
+            ->get();
+
+        // エリア別集計(上位5件)
+        $prefectureCount = $this
+            ->select(
+                'user.prefecture',
+                DB::raw('COUNT(*) AS prefectureCount')
+            )
+            ->join('user', 'entry.user_id', '=', 'user.id')
+            ->where('entry.campaign_id', $campaignId)
+            ->groupBy('user.prefecture')
+            ->orderBy('prefectureCount', 'desc')
+            ->limit(5)
+            ->get();
+
+        return [
+            'genderCount' => $genderCount,
+            'ageCount' => $ageCount,
+            'prefectureCount' => $prefectureCount,
+        ];
     }
 }
