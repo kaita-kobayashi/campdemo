@@ -69,5 +69,10 @@ Route::group(['middleware' => ['auth:web']], function () {
     Route::group(['prefix' => 'analytics', 'middleware' => ['privileges:analytics']], function () {
         Route::get('/', [AnalyticsController::class, 'getAnalytics'])->name('getAnalytics');
         Route::post('/', [AnalyticsController::class, 'postAnalytics'])->name('postAnalytics');
+        Route::get('/summary', [AnalyticsController::class, 'getAnalyticsSummary'])->name('getAnalyticsSummary');
+        Route::get('/transition', [AnalyticsController::class, 'getAnalyticsTransition'])->name('getAnalyticsTransition');
+        Route::get('/gender', [AnalyticsController::class, 'getAnalyticsGender'])->name('getAnalyticsGender');
+        Route::get('/age', [AnalyticsController::class, 'getAnalyticsAge'])->name('getAnalyticsAge');
+        Route::get('/eria', [AnalyticsController::class, 'getAnalyticsEria'])->name('getAnalyticsEria');
     });
 });

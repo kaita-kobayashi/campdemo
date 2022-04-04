@@ -21,7 +21,8 @@ class EntryFactory extends Factory
             'user_id' => function () {
                 return self::$num++;
             },
-            'answer' => '{}'
+            'answer' => '{}',
+            'entry_date' => $this->faker->dateTimeBetween('now', '+2 week'),
         ];
     }
 }

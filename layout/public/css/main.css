@@ -1,4 +1,4 @@
-.data-table-body a {
+.data-table-body a, .analytics-summay-table a {
   color: rgb(6,69,173);
   text-decoration: underline;
 }
@@ -98,4 +98,14 @@
   text-align: center;
   padding: 0.5rem;
   border-width: 1px;
+}
+
+.pie-chart {
+  width: 100%;
+  height: 500px;
+}
+
+.xy-chart {
+  width: 100%;
+  height: 1200px;
 }

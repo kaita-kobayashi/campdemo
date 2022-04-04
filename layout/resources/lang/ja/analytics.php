@@ -4,7 +4,11 @@ return [
     'title' => [
         'analytics' => 'アナリティクス',
         'select' => 'キャンペーン選択',
-        'summary' => 'サマリー'
+        'summary' => 'サマリー',
+        'transition' => '応募推移',
+        'gender' => '応募性別',
+        'age' => '応募年代',
+        'eria' => '応募エリア',
     ],
     'tableHeader' => [
         'row' => [

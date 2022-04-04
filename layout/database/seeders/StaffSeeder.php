@@ -23,7 +23,7 @@ class StaffSeeder extends Seeder
             'password' => Hash::make('password'),
             'last_name' => 'kobayashi',
             'first_name' => 'kaita',
-            'privileges' => '{"staff":["list","detail","create","edit","delete"],"account":["list","detail","create","edit","delete"],"analytics":["select","summary"]}',
+            'privileges' => '{"staff":["list","detail","create","edit","delete"],"account":["list","detail","create","edit","delete"],"analytics":["select","summary","transition","gender","age","eria"]}',
             'status' => 1,
             'tfa_setting' => 0,
         ];
@@ -32,7 +32,7 @@ class StaffSeeder extends Seeder
             'password' => Hash::make('password'),
             'last_name' => '管理者',
             'first_name' => '太郎',
-            'privileges' => '{"staff":["list","detail","create","edit","delete"],"account":["list","detail","create","edit","delete"],"analytics":["select","summary"]}',
+            'privileges' => '{"staff":["list","detail","create","edit","delete"],"account":["list","detail","create","edit","delete"],"analytics":["select","summary","transition","gender","age","eria"]}',
             'status' => 1,
             'tfa_setting' => 0,
         ];
@@ -43,7 +43,7 @@ class StaffSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'last_name' => 'スタッフ',
                 'first_name' => (string)$i,
-                'privileges' => '{"staff":["list","detail","create","edit","delete"],"account":["list","detail","create","edit","delete"],"analytics":["select","summary"]}',
+                'privileges' => '{"staff":["list","detail","create","edit","delete"],"account":["list","detail","create","edit","delete"],"analytics":["select","summary","transition","gender","age","eria"]}',
                 'status' => 0,
             ];
         }

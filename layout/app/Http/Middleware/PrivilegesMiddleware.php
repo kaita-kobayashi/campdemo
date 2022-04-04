@@ -44,9 +44,23 @@ class PrivilegesMiddleware
     public function isPermissionError(array $privileges, string $path, string $key): bool
     {
         if ($key === 'analytics') {
-            $str = request()->isMethod('post') ? 'summary' : 'select';
-            if (!array_key_exists($key, $privileges) || !in_array($str, $privileges[$key])) {
+            if (!array_key_exists($key, $privileges) || !in_array('select', $privileges[$key])) {
                 return true;
+            }
+            if (!in_array('summary', $privileges[$key])) {
+                return true;
+            }
+            if (preg_match('/transition/', $path)) {
+                return !in_array('transition', $privileges[$key]);
+            }
+            if (preg_match('/gender/', $path)) {
+                return !in_array('gender', $privileges[$key]);
+            }
+            if (preg_match('/age/', $path)) {
+                return !in_array('age', $privileges[$key]);
+            }
+            if (preg_match('/eria/', $path)) {
+                return !in_array('eria', $privileges[$key]);
             }
         } else {
             if (!array_key_exists($key, $privileges) || !in_array('list', $privileges[$key])) {

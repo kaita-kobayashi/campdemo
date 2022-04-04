@@ -34,4 +34,17 @@ class CommonService
         }
         Session::put($key, $value);
     }
+
+    /**
+     * セッション破棄
+     *
+     * @param string $key
+     * @return void
+     */
+    public function deleteSession(string $key): void
+    {
+        if (Session::has($key)) {
+            Session::forget($key);
+        };
+    }
 }

@@ -22,7 +22,7 @@ class DailySummarySeeder extends Seeder
         $insertForm = [];
         $now = new Carbon();
 
-        for ($i = 1; $i <= 30; $i++) {
+        for ($i = 1; $i <= 60; $i++) {
             $campaignId = rand(1, $num);
             $productData = Product::where('campaign_id', $campaignId)->get();
             if ($campaignId == 1) {

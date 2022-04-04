@@ -44,19 +44,34 @@ class AnalyticsService extends CommonService
         $resultDailySummary = $this->dailySummary->getDailySummayList($campaignId);
         // 応募件数、性別ごとの件数取得
         $countAll = 0;
-        $genderCount = [];
         foreach ($resultEntry['genderCount'] as $item) {
             $countAll += $item['genderCount'];
-            $genderCount[$item['gender']] = $item['genderCount'];
         }
 
         return [
             'entryNum' => $countAll,
             'purchaseProducts' => $this->countPurchaseProducts($resultDailySummary),
-            'genderCount' => $genderCount,
-            'ageCount' => $resultEntry['ageCount'],
-            'prefectureCount' => $resultEntry['prefectureCount']
+            'genderCount' => $this->convertArray($resultEntry['genderCount'], 'gender', 'genderCount'),
+            'ageCount' => $this->convertArray($resultEntry['ageCount'], 'userAge', 'ageCount'),
+            'prefectureCount' => $this->convertArray($resultEntry['prefectureCount'], 'prefecture', 'prefectureCount')
         ];
+    }
+
+    /**
+     * 配列化
+     *
+     * @param \Illuminate\Database\Eloquent\Collection $data
+     * @param string $key
+     * @param string $value
+     * @return array
+     */
+    public function convertArray(Collection $data, string $key, string $value): array
+    {
+        $result = [];
+        foreach ($data as $item) {
+            $result[$item[$key]] = $item[$value];
+        }
+        return $result;
     }
 
     /**
@@ -79,5 +94,57 @@ class AnalyticsService extends CommonService
         }
         ksort($result);
         return $result;
+    }
+
+    /**
+     * 日付別応募件数取得
+     *
+     * @param string $campaignId
+     * @return array
+     */
+    public function getAnalyticsTransition(string $campaignId): array
+    {
+        //　データ取得
+        $result = $this->entry->getTransitionCount($campaignId);
+        return $this->convertArray($result, 'entry_date_format', 'transitionCount');
+    }
+
+    /**
+     * 応募性別取得
+     *
+     * @param string $campaignId
+     * @return array
+     */
+    public function getAnalyticsGender(string $campaignId): array
+    {
+        //　データ取得
+        $result = $this->entry->getGenderCount($campaignId);
+        return $this->convertArray($result, 'gender', 'genderCount');
+    }
+
+    /**
+     * 応募年代取得
+     *
+     * @param string $campaignId
+     * @return array
+     */
+    public function getAnalyticsAge(string $campaignId): array
+    {
+        //　データ取得
+        $result = $this->entry->getAgeCount($campaignId);
+        return $this->convertArray($result, 'userAge', 'ageCount');
+    }
+
+    /**
+     * 応募エリア取得
+     *
+     * @param string $campaignId
+     * @return array
+     */
+    public function getAnalyticsEria(string $campaignId): array
+    {
+        //　データ取得
+        $result = $this->entry->getPrefectureCount($campaignId);
+        return $this->convertArray($result, 'prefecture', 'prefectureCount');
     }
 }

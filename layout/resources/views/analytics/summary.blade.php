@@ -13,7 +13,7 @@
                 </div>
                 <table class="text-left table-auto mt-5 analytics-summay-table">
                     <tr>
-                        <th>{{ __('analytics.tableHeader.row.entryNum') }}</th>
+                        <th><a href="{{ route('getAnalyticsTransition') }}">{{ __('analytics.tableHeader.row.entryNum') }}</a></th>
                         <td>{{ $result['entryNum'] }}件</td>
                     </tr>
                 </table>
@@ -39,7 +39,7 @@
                         @endforeach
                     </tr>
                     <tr>
-                        <th>{{ __('analytics.tableHeader.row.entryGender') }}</th>
+                        <th><a href="{{ route('getAnalyticsGender') }}">{{ __('analytics.tableHeader.row.entryGender') }}</a></th>
                         @foreach (__('analytics.tableHeader.col.gender') as $key => $gender)
                             <td>{{ $result['genderCount'][$gender] }}人</td>
                         @endforeach
@@ -53,9 +53,9 @@
                         @endforeach
                     </tr>
                     <tr>
-                        <th>{{ __('analytics.tableHeader.row.entryAge') }}</th>
-                        @foreach ($result['ageCount'] as $ages)
-                            <td>{{ $ages['ageCount'] }}人</td>
+                        <th><a href="{{ route('getAnalyticsAge') }}">{{ __('analytics.tableHeader.row.entryAge') }}</a></th>
+                        @foreach (__('analytics.tableHeader.col.age') as $key => $age)
+                            <td>{{ $result['ageCount'][$age] }}人</td>
                         @endforeach
                     </tr>
                 </table>
@@ -67,9 +67,9 @@
                         @endforeach
                     </tr>
                     <tr>
-                        <th>{{ __('analytics.tableHeader.row.entryEria') }}</th>
-                        @foreach ($result['prefectureCount'] as $prefectures)
-                            <td>{{ $prefectures['prefecture'] . '(' . $prefectures['prefectureCount'] . '件)' }}</td>
+                        <th><a href="{{ route('getAnalyticsEria') }}">{{ __('analytics.tableHeader.row.entryEria') }}</a></th>
+                        @foreach ($result['prefectureCount'] as $key => $prefectures)
+                            <td>{{ $key . '(' . $prefectures . '件)' }}</td>
                         @endforeach
                     </tr>
                 </table>
