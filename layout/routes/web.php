@@ -75,5 +75,4 @@ Route::group(['middleware' => ['auth:web']], function () {
         Route::get('/age', [AnalyticsController::class, 'getAnalyticsAge'])->name('getAnalyticsAge');
         Route::get('/eria', [AnalyticsController::class, 'getAnalyticsEria'])->name('getAnalyticsEria');
     });
-    // test
 });
